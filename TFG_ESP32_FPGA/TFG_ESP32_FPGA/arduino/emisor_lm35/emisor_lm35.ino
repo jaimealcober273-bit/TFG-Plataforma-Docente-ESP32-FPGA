@@ -12,7 +12,6 @@ typedef struct struct_message {
 } struct_message;
 
 struct_message datosEnviar;
-
 esp_now_peer_info_t peerInfo;
 
 float ultimoADC = 0;
@@ -37,7 +36,8 @@ float leerTemperaturaLM35() {
 
   ultimoVoltaje = ultimoADC * (3.3 / 4095.0);
 
-  ultimaTemperatura = ultimoVoltaje * 11;
+  // LM35: 10 mV por grado Celsius
+  ultimaTemperatura = ultimoVoltaje * 100.0;
 
   return ultimaTemperatura;
 }
@@ -47,7 +47,6 @@ void setup() {
   delay(3000);
 
   Serial.println();
-
   Serial.println("ESP32 emisora 2 con LM35");
 
   pinMode(LM35_PIN, INPUT);
